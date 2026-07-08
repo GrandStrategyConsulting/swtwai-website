@@ -161,6 +161,7 @@ footer .strap{font-family:'Poppins',sans-serif;font-size:.66rem;letter-spacing:.
     <a href="#" data-page="schools">For Schools</a>
     <a href="#" data-page="teams">For Teams</a>
     <a href="#" data-page="maze">AI Type Survey</a>
+    <a href="journey.html">The SWTWAI Journey</a>
   </div>
 </nav>
 
@@ -580,14 +581,22 @@ document.addEventListener('DOMContentLoaded',function(){
 </footer>
 
 <script>
+function showPage(target, scroll){
+  if(!target || !document.getElementById(target)) return;
+  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === target));
+  document.querySelectorAll('.nav a[data-page]').forEach(a => a.classList.toggle('active', a.getAttribute('data-page') === target && !a.classList.contains('brand')));
+  if(scroll !== false) window.scrollTo({top:0, behavior:'auto'});
+}
 document.addEventListener('click', function(e){
   const link = e.target.closest('[data-page]');
   if(!link) return;
   e.preventDefault();
-  const target = link.getAttribute('data-page');
-  document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === target));
-  document.querySelectorAll('.nav a[data-page]').forEach(a => a.classList.toggle('active', a.getAttribute('data-page') === target && !a.classList.contains('brand')));
-  window.scrollTo({top:0, behavior:'auto'});
+  showPage(link.getAttribute('data-page'), true);
+});
+// deep-link support: index.html#book (e.g. from The SWTWAI Journey nav)
+window.addEventListener('DOMContentLoaded', function(){
+  var h = location.hash.slice(1);
+  if(h && document.getElementById(h)) showPage(h, false);
 });
 </script>
 </body>
