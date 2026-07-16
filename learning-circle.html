@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Eight-Week AI Learning Circle | Stop Wasting Time With AI</title>
+<meta name="description" content="A practice room, not another webinar. Eight weeks, 12–16 seats, real work — leave with functioning AI workflows, a SCRIPT™ brief library, and a method that outlasts the next product cycle.">
+<meta property="og:title" content="The Eight-Week AI Learning Circle — Stop Wasting Time With AI">
+<meta property="og:description" content="A practice room, not another webinar. Founding cohort begins the week of September 14, 2026. Applications close September 11.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stopwastingtimewithai.com/learning-circle">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  /* ============ SWTWAI BRAND TOKENS (One-Page Visual Style Guide) ============ */
+  :root{
+    --navy:#16245C;
+    --orange:#FF6A2A;
+    --pink:#F83E9B;
+    --purple:#8E4DFF;
+    --blue:#3747FF;
+    --green:#18B85A;
+    --teal:#0E9F8C;          /* SUSTAIN — teal / green-blue */
+    --soft-grey:#E8E8EC;
+    --pale:#F4F6FA;
+    --ink:#232742;           /* body text — near-navy charcoal */
+    --gradient:linear-gradient(90deg,var(--orange),var(--pink),var(--purple),var(--blue),var(--green));
+    --radius:14px;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    color:var(--ink);font-size:17px;line-height:1.65;background:#fff;
+  }
+  /* Subtle hexagon background texture (brand motif) */
+  .hex-bg{
+    background-color:#fff;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='97' viewBox='0 0 56 97'%3E%3Cpath d='M28 2 52 16v28L28 58 4 44V16Z M28 60 52 74v28' fill='none' stroke='%2316245C' stroke-opacity='0.045' stroke-width='1.5'/%3E%3C/svg%3E");
+  }
+  h1,h2,h3,h4{font-family:'Montserrat',sans-serif;color:var(--navy);line-height:1.15;letter-spacing:-0.01em}
+  h1{font-weight:900;font-size:clamp(2.3rem,5.5vw,3.6rem)}
+  h2{font-weight:800;font-size:clamp(1.6rem,3.4vw,2.2rem);margin-bottom:1rem}
+  h3{font-weight:800;font-size:1.15rem;margin-bottom:.5rem}
+  p{margin-bottom:1.1rem}
+  a{color:var(--blue)}
+  strong{color:var(--navy)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  section{padding:72px 0}
+  .grad-rule{height:5px;background:var(--gradient);border:none;border-radius:3px}
+  .grad-rule.thin{height:3px;max-width:180px;margin:18px 0 26px}
+  .kicker{
+    display:inline-block;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.78rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--navy);
+    border-left:4px solid var(--pink);padding:.35em .9em;background:var(--pale);
+    border-radius:0 6px 6px 0;margin-bottom:1.2rem;
+  }
+  /* ---------- header ---------- */
+  header.site{
+    border-bottom:1px solid var(--soft-grey);padding:14px 0;position:sticky;top:0;background:rgba(255,255,255,0.94);
+    backdrop-filter:blur(6px);z-index:50;
+  }
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .logo{font-family:'Montserrat',sans-serif;font-weight:900;color:var(--navy);font-size:1.02rem;letter-spacing:.02em;text-decoration:none}
+  .logo em{font-style:normal;background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent}
+  nav.anchors{display:flex;gap:22px;font-size:.9rem;font-weight:600}
+  nav.anchors a{color:var(--navy);text-decoration:none}
+  nav.anchors a:hover{color:var(--pink)}
+  @media(max-width:760px){nav.anchors{display:none}}
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-block;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1rem;
+    color:#fff;background:var(--navy);padding:16px 34px;border-radius:999px;text-decoration:none;
+    transition:transform .15s ease, box-shadow .15s ease;border:none;cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(22,36,92,.22)}
+  .btn:focus-visible{outline:3px solid var(--purple);outline-offset:3px}
+  .btn.grad{background:var(--gradient)}
+  .btn.ghost{background:#fff;color:var(--navy);border:2px solid var(--navy)}
+  .btn-note{display:block;font-size:.85rem;color:#5a5f78;margin-top:.7rem}
+  /* ---------- hero ---------- */
+  .hero{padding:96px 0 84px;text-align:left}
+  .hero .sub{font-size:1.22rem;max-width:46em;margin:1.4rem 0 2rem;color:var(--ink)}
+  .hero .fact{font-size:.92rem;color:#5a5f78;margin-top:1rem}
+  /* ---------- callout ---------- */
+  .callout{
+    background:var(--pale);border:1px solid var(--soft-grey);border-left:6px solid var(--pink);
+    border-radius:var(--radius);padding:26px 30px;margin:1.6rem 0;
+  }
+  .callout p:last-child{margin-bottom:0}
+  /* ---------- two-col for/notfor ---------- */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+  @media(max-width:820px){.cols{grid-template-columns:1fr}}
+  .card{background:#fff;border:1.5px solid var(--soft-grey);border-radius:var(--radius);padding:30px}
+  .card.for{border-top:6px solid var(--green)}
+  .card.notfor{border-top:6px solid var(--orange)}
+  /* ---------- SUMMS weeks ---------- */
+  .weeks{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:1.6rem}
+  @media(max-width:820px){.weeks{grid-template-columns:1fr}}
+  .week{background:#fff;border:1.5px solid var(--soft-grey);border-radius:var(--radius);padding:22px 24px;border-left-width:6px}
+  .week .tag{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;display:inline-block;padding:.25em .8em;border-radius:999px;color:#fff;margin-bottom:.6rem}
+  .week p{margin:0;font-size:.97rem}
+  .see{border-left-color:var(--pink)}   .see .tag{background:var(--pink)}
+  .und{border-left-color:var(--blue)}   .und .tag{background:var(--blue)}
+  .mak{border-left-color:var(--green)}  .mak .tag{background:var(--green)}
+  .man{border-left-color:var(--orange)} .man .tag{background:var(--orange)}
+  .sus{border-left-color:var(--teal)}   .sus .tag{background:var(--teal)}
+  .scr{border-left-color:var(--purple)} .scr .tag{background:var(--purple)}
+  /* ---------- stack table ---------- */
+  table.stack{width:100%;border-collapse:collapse;margin:1.4rem 0 .8rem;background:#fff;border:1.5px solid var(--soft-grey);border-radius:var(--radius);overflow:hidden}
+  table.stack th,table.stack td{padding:13px 18px;text-align:left;border-bottom:1px solid var(--soft-grey);font-size:.97rem}
+  table.stack th{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--navy);background:var(--pale);font-size:.84rem;letter-spacing:.08em;text-transform:uppercase}
+  table.stack td:last-child,table.stack th:last-child{text-align:right;white-space:nowrap}
+  table.stack tr.total td{font-weight:700;color:var(--navy);background:var(--pale)}
+  table.stack tr.price td{font-family:'Montserrat',sans-serif;font-weight:900;color:var(--navy);font-size:1.05rem;background:#fff;border-top:3px solid;border-image:var(--gradient) 1}
+  .disclosure{font-style:italic;font-size:.92rem;color:#5a5f78}
+  /* ---------- pricing ---------- */
+  .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:2rem 0 1rem}
+  @media(max-width:900px){.prices{grid-template-columns:1fr}}
+  .price-card{background:#fff;border:1.5px solid var(--soft-grey);border-radius:var(--radius);padding:30px 26px;display:flex;flex-direction:column}
+  .price-card.founding{border:2.5px solid transparent;background:
+    linear-gradient(#fff,#fff) padding-box, var(--gradient) border-box;box-shadow:0 14px 34px rgba(22,36,92,.10)}
+  .price-card .plan{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--navy)}
+  .price-card .amount{font-family:'Montserrat',sans-serif;font-weight:900;font-size:2.4rem;color:var(--navy);margin:.3rem 0 .6rem}
+  .price-card p{font-size:.94rem;flex:1}
+  .price-card .btn{text-align:center;margin-top:auto}
+  .seat-note{text-align:center;font-size:.95rem;color:#5a5f78;margin-top:1.2rem}
+  /* ---------- facilitator ---------- */
+  .facil{display:grid;grid-template-columns:280px 1fr;gap:36px;align-items:start}
+  @media(max-width:820px){.facil{grid-template-columns:1fr}}
+  .headshot{background:var(--pale);border:1.5px solid var(--soft-grey);border-radius:var(--radius);aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;color:#8a90ab;font-size:.85rem;text-align:center;padding:16px}
+  .pull{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.3rem;color:var(--navy);border-left:5px solid var(--purple);padding-left:20px;margin:1.4rem 0}
+  /* ---------- FAQ ---------- */
+  details{border:1.5px solid var(--soft-grey);border-radius:12px;margin-bottom:12px;background:#fff}
+  details summary{cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;color:var(--navy);padding:18px 22px;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{content:'+';font-size:1.4rem;color:var(--pink);font-weight:800;flex-shrink:0}
+  details[open] summary::after{content:'–'}
+  details .a{padding:0 22px 20px;font-size:.97rem}
+  details summary:focus-visible{outline:3px solid var(--purple);outline-offset:2px;border-radius:12px}
+  /* ---------- bands ---------- */
+  .band{background:var(--pale)}
+  .band-navy{background:var(--navy);color:#fff}
+  .band-navy h2{color:#fff}
+  .band-navy strong{color:#fff}
+  .band-navy .btn{background:#fff;color:var(--navy)}
+  /* ---------- footer ---------- */
+  footer.site{border-top:5px solid;border-image:var(--gradient) 1;padding:36px 0;font-size:.85rem;color:#5a5f78;text-align:center}
+  footer.site a{color:var(--navy);font-weight:600}
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body class="hex-bg">
+
+<!-- ==================================================================
+  CONFIG — the one place to edit links, dates, and the waitlist toggle.
+  1. Replace the three Stripe Payment Link URLs (create them in Stripe:
+     Founding $1,497 one-time · VIP $2,997 one-time · Plan $699/mo ×3).
+  2. Replace APPLY_URL with your application form link (Tally/Google Form).
+  3. On September 12, 2026: set WAITLIST_MODE to true. That's it.
+=================================================================== -->
+<script>
+  const CONFIG = {
+    WAITLIST_MODE: false,
+    APPLY_URL:  "{{APPLICATION_FORM_URL}}",
+    WAITLIST_URL: "{{WAITLIST_FORM_URL}}",
+    STRIPE_FOUNDING: "{{STRIPE_LINK_FOUNDING_1497}}",
+    STRIPE_VIP:      "{{STRIPE_LINK_VIP_2997}}",
+    STRIPE_PLAN:     "{{STRIPE_LINK_PLAN_699x3}}"
+  };
+</script>
+
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="https://stopwastingtimewithai.com">STOP WASTING TIME <em>WITH AI.</em></a>
+    <nav class="anchors" aria-label="Page sections">
+      <a href="#curriculum">Curriculum</a>
+      <a href="#included">What's Included</a>
+      <a href="#facilitator">Facilitator</a>
+      <a href="#faq">FAQ</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ 1. HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <span class="kicker">The Eight-Week AI Learning Circle · Founding Cohort</span>
+    <h1>A practice room,<br>not another webinar.</h1>
+    <hr class="grad-rule thin">
+    <p class="sub">You don't need another AI course. You need eight weeks in a room where you work on your real problems, with a method that runs a real business — until confident, responsible AI use becomes your normal way of working.</p>
+    <a class="btn grad js-apply" href="#enroll">Apply for a Seat — Cohort Begins Week of September 14</a>
+    <p class="fact"><a href="#curriculum">See the full curriculum ↓</a></p>
+  </div>
+</section>
+
+<!-- ============ 2. THE OPENING PROBLEM ============ -->
+<section class="band">
+  <div class="wrap">
+    <h2>You have access to AI. So why isn't it working?</h2>
+    <p>Maybe more access than you know what to do with — a work Copilot license you open twice a month, a ChatGPT subscription, a Claude tab, a folder of saved prompts you never reuse, and a browser full of articles about tools you haven't tried yet.</p>
+    <p>And still, most days, it isn't quite working. The outputs sound like everyone else's. You retype the same instructions from scratch because last week's version is lost in a chat history you'll never find. You get a draft that's eighty percent fine and quietly wrong in the twenty percent that matters. So you use AI for the small stuff, skip it for the work that counts, and carry a private, low-grade worry that everyone around you has figured out something you haven't.</p>
+    <div class="callout">
+      <p>Here is the truth the training industry keeps skipping: <strong>AI access is not AI readiness.</strong> Nobody handed you a method. They handed you a login.</p>
+    </div>
+    <p>The problem was never that you're behind. The problem is that you've been starting with the tool instead of the problem — experimenting without intention, chasing products, accepting first outputs, rebuilding the same instructions again and again. That's not a character flaw. It's exactly what happens when access outruns readiness.</p>
+    <p>And one more truth, the one that matters most: <strong>AI adoption is emotional before it is technical.</strong> The overwhelm, the skepticism, the quiet worry — that isn't weakness, and it isn't noise. <strong>Anxiety is not always an obstacle. Sometimes it is information the change strategy has ignored.</strong> This program treats it as information, and works with it.</p>
+  </div>
+</section>
+
+<!-- ============ 3. WHO IT'S FOR ============ -->
+<section>
+  <div class="wrap">
+    <h2>Built for people with real work — and honest about who it isn't for</h2>
+    <div class="cols">
+      <div class="card for">
+        <h3>This Learning Circle is for you if…</h3>
+        <p>You're a working professional with real responsibilities and no time to waste: a consultant, coach, founder, or small-business owner; an L&amp;D, HR, or OD leader; an educator, nonprofit, or community leader; a change practitioner or business-development professional.</p>
+        <p>You have workplace AI access you aren't using consistently — or you're paying for several AI products without enough value in return.</p>
+        <p style="margin-bottom:0">You do not need to be technical. You need to have real work — and a willingness to bring it into the room.</p>
+      </div>
+      <div class="card notfor">
+        <h3>It is honestly not for everyone</h3>
+        <p><strong>Not a technical certification.</strong> If you want credentials in machine learning or software development, a technical program will serve you far better.</p>
+        <p><strong>Not a prompt-hack collection.</strong> A swipe file of 500 magic prompts is free online — and you'd be retyping instructions again within a month, which is precisely the cycle this program exists to break.</p>
+        <p style="margin-bottom:0"><strong>Not a passive experience.</strong> Every week you'll work on a real problem from your actual job. If you can't bring real work and roughly three to four hours a week, please wait for a season when you can. The practice room only works when everyone in it practices.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 & 5. LEARN + BUILD ============ -->
+<section class="band">
+  <div class="wrap">
+    <h2>What you'll learn — and what you'll build</h2>
+    <p>You will learn capabilities and judgment — not dependence on any brand. What generative AI actually is and is not, and how it differs from search, automation, assistants, models, interfaces, and agents — so the vocabulary stops being intimidating and starts being useful. You'll learn to think in capabilities first and products second, so when the tools change (and they will), your method doesn't.</p>
+    <p>You'll learn to brief instead of prompt. <strong>A prompt gives a task. A brief gives direction.</strong> The SCRIPT™ methodology — Situation, Clear Intent, Role, Instructions, Parameters, Test — is distinctive for the two steps most frameworks skip: it begins by declaring your intent and ends by testing the output against that intent. It's the same briefing discipline that runs Grand Strategy's own business development.</p>
+    <p>You'll learn to verify. <strong>Model predicts. Human verifies.</strong> You'll build a working evaluation habit — how to test outputs, where AI is genuinely unreliable, and when not to use AI at all. Because <strong>the more capable AI becomes, the more accountable human judgment must become.</strong> And you'll work with the emotional side honestly, using Emotional Maths®: treating what you feel about AI as data about the change you're navigating, not a weakness to hide.</p>
+    <div class="callout" style="border-left-color:var(--green)">
+      <p><strong>This is a building program, and you will leave with assets, not notes.</strong> By the final session: <strong>two to three functioning workflows</strong> built around problems you actually have, each with its verification step and its "when not to use AI" guardrail attached; a personal <strong>SCRIPT™ brief library</strong> so you never start from a blank prompt box again; a <strong>verification process</strong> you trust; a <strong>tool-selection framework</strong> that tells you which capability (and which subscription, if any) a task genuinely needs; and a <strong>30-day implementation plan</strong> — a sustainable personal AI practice, not temporary enthusiasm.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. CURRICULUM ============ -->
+<section id="curriculum">
+  <div class="wrap">
+    <h2>The eight weeks at a glance</h2>
+    <p>The program follows the SUMMS™ arc — See, Understand, Make, Manage, Sustain. You won't memorize the framework; you'll live inside it.</p>
+    <div class="weeks">
+      <div class="week see"><span class="tag">Week 1 · SEE</span><p>Take honest stock: where AI already touches your work, where your time actually goes, and what you feel about all of it — because feelings about AI are data, and we start there on purpose.</p></div>
+      <div class="week und"><span class="tag">Week 2 · UNDERSTAND</span><p>Learn what generative AI is and is not — capabilities, limits, and the difference between search, automation, assistants, and agents — so you can stop chasing tools and start matching capability to problem.</p></div>
+      <div class="week scr"><span class="tag">Week 3 · SCRIPT</span><p>Stop prompting. Start briefing. Learn the full SCRIPT™ methodology — Situation, Clear Intent, Role, Instructions, Parameters, Test — and write your first real briefs for your real work.</p></div>
+      <div class="week mak"><span class="tag">Week 4 · MAKE</span><p>Put the method to work: produce your first AI-supported deliverable from an actual current responsibility, and evaluate it like a professional rather than accepting it like a first draft.</p></div>
+      <div class="week man"><span class="tag">Week 5 · MANAGE</span><p>Build the judgment layer: verification habits, privacy and confidentiality rules, and the honest answer to "should AI touch this at all?"</p></div>
+      <div class="week mak"><span class="tag">Week 6 · BUILD</span><p>Turn one-off outputs into a reusable workflow — mapped, briefed, tested, and documented — chosen from a library seeded by workflows in live commercial use.</p></div>
+      <div class="week man"><span class="tag">Week 7 · ORCHESTRATE</span><p>Move from one chatbot to a working system: connect your workflows, direct multiple capabilities, and take your place as the human in the lead.</p></div>
+      <div class="week sus"><span class="tag">Week 8 · SUSTAIN</span><p>Showcase your workflows to the cohort, lock in your 30-day plan, and leave with a practice built to outlast the program — and the next product cycle.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. EVERYTHING INCLUDED ============ -->
+<section class="band" id="included">
+  <div class="wrap">
+    <h2>Everything included</h2>
+    <p><strong>Eight two-hour live facilitated Learning Circle sessions</strong> — cohort-based practice with a Master MSCEIT®2 Practitioner and 25-year change consultant, capped at 16 people so every voice fits in the room. <strong>Four workflow clinics</strong> focused entirely on your actual workflows and where they're sticking. <strong>The SCRIPT™ briefing system and templates</strong> — the same briefing method that runs Grand Strategy's own pipeline. <strong>The workflow library and mapping tools</strong> — a menu of 20+ workflows seeded from systems in live commercial use. <strong>Diagnostics and measurement</strong> at baseline, midpoint, final, and 30 days, with a personal report so you can see your own before-and-after. <strong>The verification, privacy, and responsible-use kit</strong> — field-tested checklists developed through licensed enterprise and healthcare delivery. <strong>The book, workbook, and Practice Kit</strong> — every participant receives <em>Stop Wasting Time With AI: A Practical, Emotionally Intelligent Method for Using AI Well</em>. And <strong>the peer cohort, accountability partnerships, and final showcase</strong> — the practice-room experience itself.</p>
+    <table class="stack">
+      <thead><tr><th scope="col">What's included</th><th scope="col">Indicative standalone value</th></tr></thead>
+      <tbody>
+        <tr><td>Eight two-hour facilitated Learning Circle sessions</td><td>$2,400</td></tr>
+        <tr><td>Four workflow clinics / office hours</td><td>$600</td></tr>
+        <tr><td>SCRIPT™ briefing system and templates</td><td>$500</td></tr>
+        <tr><td>Workflow library and mapping tools</td><td>$500</td></tr>
+        <tr><td>Diagnostics and measurement (baseline, midpoint, final, 30-day)</td><td>$350</td></tr>
+        <tr><td>Verification, privacy and responsible-use kit</td><td>$300</td></tr>
+        <tr><td>The book, workbook and Practice Kit</td><td>$150</td></tr>
+        <tr><td>Peer cohort, accountability and final showcase</td><td>$500</td></tr>
+        <tr class="total"><td>Indicative total</td><td>$5,300</td></tr>
+        <tr class="price"><td>Standard enrollment</td><td>$1,997</td></tr>
+      </tbody>
+    </table>
+    <p class="disclosure">A note on these numbers: the values above are our honest positioning of each component's standalone worth, not audited market prices. At the standard price, you're receiving roughly two and a half times the price in value — and we'd rather state that plainly than inflate the numbers and ask you to squint.</p>
+  </div>
+</section>
+
+<!-- ============ 8. WHY A LEARNING CIRCLE ============ -->
+<section>
+  <div class="wrap">
+    <h2>Why a Learning Circle — and not another AI course</h2>
+    <p>Because you've probably already taken an AI webinar. And here you are.</p>
+    <p><strong>One-off AI webinars rarely change behavior.</strong> You watch someone else's demo on someone else's problem, collect a PDF, feel briefly informed, and return to work exactly as you left it. The gap between watching and doing never closes, because nothing in the format asks you to do anything.</p>
+    <p>A Learning Circle is a different kind of room. <strong>Practice rooms, not webinars.</strong> Twelve to sixteen people, eight weeks, every session built around practice on your real problems — not canned examples. Live demonstrations use genuine working workflows, including the facilitator's own. You try things, some fail in front of people, and that's the point: the Circle has working agreements, confidentiality expectations, and a deliberate process for discussing unreliable outputs and false starts, because psychological safety isn't a nicety here — it's the mechanism that makes practice possible. Nobody dominates, nobody gets left behind, and skeptics are welcome; skepticism, handled honestly, is some of the best data in the room.</p>
+    <p>You also get what no recording can give you: peers building workflows next to you, an accountability partner who notices when you stall, and a final showcase where you present something that works.</p>
+    <div class="callout" style="border-left-color:var(--blue)">
+      <p><strong>Courses transfer information. Circles change practice. You've had enough information.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. FACILITATOR ============ -->
+<section class="band" id="facilitator">
+  <div class="wrap">
+    <h2>About your facilitator</h2>
+    <div class="facil">
+      <div class="headshot">[Photo of Zena Collins — replace this block with the approved headshot]</div>
+      <div>
+        <p><strong>Zena Collins</strong> is the founder of Grand Strategy Consulting LLC — Powering Logic with EI &amp; AI — and the author of <em>Stop Wasting Time With AI: A Practical, Emotionally Intelligent Method for Using AI Well</em>. She brings more than 25 years of experience in change, communications, learning, and commercial transformation across professional services, media, healthcare, government, and the creative industries, including 14 years at EY.</p>
+        <p>She is the creator of the three frameworks the Circle is built on — Emotional Maths®, SUMMS™, and SCRIPT™ — and a Master MSCEIT®2 Practitioner and Trainer, which means the emotional-intelligence foundation of this program rests on ability-based assessment, not personality quizzes. She has delivered AI learning to more than 1,000 employees, with participant ratings of approximately 4.6 out of 5, and has facilitated AI Learning Circles and practical peer learning long before this cohort.</p>
+        <div class="pull">"Our internal practice has to match what we sell."</div>
+        <p>Most importantly: she runs her own business on the method she teaches. Grand Strategy's research, writing, proposals, marketing, learning design, and business development all run on SCRIPT™ briefs with a human-gated review process. When you watch a demonstration in Week 3, you're watching the operating system of a live business — not a slide about one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. TESTIMONIALS — DO NOT PUBLISH until real, consented quotes exist.
+     This is the first public cohort; placeholders intentionally omitted from the live page.
+     When founding-cohort testimonials are collected with written consent, add them here. -->
+
+<!-- ============ 11. FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <h2>Questions, answered honestly</h2>
+    <details><summary>Do I need to be technical?</summary><div class="a"><p>No. The program is designed for nontechnical professionals, and the curriculum explains capabilities in plain language before it ever mentions a product. If you can write an email describing what you need from a colleague, you have the core skill — the Circle teaches you to apply it to AI.</p></div></details>
+    <details><summary>Which tools do I need? Do I have to buy new subscriptions?</summary><div class="a"><p>No new subscriptions are required. You'll work with the AI access you already have — a workplace Copilot, an existing or free ChatGPT or Claude account, whatever is genuinely available to you. The program teaches capabilities before brands, and one of its explicit goals is to help you <em>cut</em> unnecessary spending on overlapping subscriptions, not add to it.</p></div></details>
+    <details><summary>What if I'm anxious or skeptical about AI?</summary><div class="a"><p>Then you're exactly who this was built for. AI adoption is emotional before it is technical, and the Circle treats anxiety as data, not weakness — Week 1 begins there deliberately. Skeptics make the room better; you'll never be asked to perform enthusiasm you don't feel.</p></div></details>
+    <details><summary>What's the time commitment?</summary><div class="a"><p>One two-hour live session per week for eight weeks, plus roughly one to two hours applying that week's practice to your own work. Because assignments run on work you already have to do, much of that time replaces effort rather than adding to it. Optional workflow clinics add up to four more hours across the program if you want them.</p></div></details>
+    <details><summary>What if I miss a session?</summary><div class="a"><p>Sessions are recorded (teaching and demonstration segments only — peer shares are never recorded, per the confidentiality agreements), and recordings are available to your cohort through the program and for 90 days after it ends. That said, this is a practice room, not a video library — plan to attend live for the large majority of sessions; the peer practice is where the change happens.</p></div></details>
+    <details><summary>Is my work confidential?</summary><div class="a"><p>Yes. The cohort operates under working agreements and confidentiality expectations that every participant signs, and the responsible-use curriculum includes clear rules about what should never enter a public AI tool — rules developed through licensed delivery in enterprise and healthcare settings. You'll practice on real work without exposing it.</p></div></details>
+    <details><summary>When does it run?</summary><div class="a"><p>The founding cohort begins the week of September 14, 2026, with live sessions held weekly on [SESSION DAY/TIME — confirm before publication] via video call. Exact session times are confirmed in your enrollment materials, and we schedule with US, UK, and Caribbean participants in mind.</p></div></details>
+    <details><summary>What's the refund and deferral policy?</summary><div class="a"><p>If you decide before Session 2 that the Circle isn't right for you, we'll refund your enrollment in full — no questions asked. Between Sessions 2 and 3, you'll receive a pro-rated credit toward a future cohort. After Session 3, refunds aren't available — the cohort is small and your seat was held — but you may transfer or defer once to a future cohort if life intervenes. A clear exit policy is itself a trust signal, so this one is published in full.</p></div></details>
+    <details><summary>Is this prompt engineering?</summary><div class="a"><p>No — and the distinction matters. Prompt engineering optimizes instructions for tools. This program builds your method for work: declaring intent, briefing well, verifying outputs, choosing capabilities, and knowing when AI shouldn't be involved at all. A prompt gives a task. A brief gives direction. You'll leave with judgment that survives the next product cycle; prompt hacks don't.</p></div></details>
+    <details><summary>Can my organization send a team, or run this internally?</summary><div class="a"><p>Yes. Organizations can enroll multiple participants in the public cohort, and Grand Strategy runs dedicated corporate cohorts for up to 15 participants with organization-specific workflows. Contact us through the application form and mention corporate interest, and we'll set up a conversation.</p></div></details>
+    <details><summary>What happens after the eight weeks?</summary><div class="a"><p>You leave with a 30-day implementation plan, and the 30-day follow-up diagnostic keeps you honest about running it. Alumni can continue into monthly workflow clinics, advanced Circles, and deeper engagements <em>if and when they want to</em> — the pathway is offered at the end and on request. No session in this program is a sales pitch for the next thing.</p></div></details>
+    <details><summary>Why is there a founding price?</summary><div class="a"><p>Because this first public cohort is an exchange. Founding participants pay $500 less than the standard price, and in return they agree to complete the program's measurement diagnostics, provide structured feedback, and allow their (anonymized, consented) results to become the case studies that future cohorts are built on. You get the full program at the lowest price it will ever be; the program gets its evidence. That's the whole deal, stated plainly.</p></div></details>
+  </div>
+</section>
+
+<!-- ============ 12. PRICING ============ -->
+<section class="band" id="pricing">
+  <div class="wrap">
+    <h2>Pricing</h2>
+    <div class="prices">
+      <div class="price-card founding">
+        <span class="plan" style="background:var(--gradient);-webkit-background-clip:text;background-clip:text;color:transparent">Founding Cohort</span>
+        <div class="amount">$1,497</div>
+        <p>Full program, every component of the stack, at $500 below the standard price. Available only for this first public cohort, in exchange for your structured feedback, participation in the before-and-after measurement, and consent to anonymized case-study use. When this cohort closes, this price is gone — genuinely.</p>
+        <a class="btn grad js-pay" data-link="STRIPE_FOUNDING" href="#enroll">Enroll — Founding Seat</a>
+        <span class="btn-note">Or three monthly payments of $699 — <a class="js-pay" data-link="STRIPE_PLAN" href="#enroll">choose the payment plan</a></span>
+      </div>
+      <div class="price-card">
+        <span class="plan">Standard Enrollment</span>
+        <div class="amount">$1,997</div>
+        <p>The confirmed ongoing price for all future cohorts, shown here so you can see exactly what the founding exchange is worth.</p>
+        <a class="btn ghost" href="#enroll">Future cohorts</a>
+      </div>
+      <div class="price-card">
+        <span class="plan">VIP</span>
+        <div class="amount">$2,997</div>
+        <p>Everything in the program, plus two private workflow-design sessions with Zena and individualized review of your workflows and brief library. For founders and leaders whose workflows carry enough weight to justify one-on-one design time. Limited to a small number of seats within the cohort.</p>
+        <a class="btn js-pay" data-link="STRIPE_VIP" href="#enroll">Enroll — VIP Seat</a>
+      </div>
+    </div>
+    <p class="seat-note">The cohort is capped at <strong>12 to 16 participants</strong> — not as a marketing device, but because that is the size at which a practice room actually works: small enough that every participant presents, practices, and gets feedback every week.</p>
+    <p class="seat-note">Payments are processed securely by Stripe. Refund policy, in full: full refund before Session 2 · pro-rated credit toward a future cohort between Sessions 2 and 3 · transfer or deferral only after Session 3 · one deferral per enrollment.</p>
+  </div>
+</section>
+
+<!-- ============ 13 & 14. ENROLL + TIMING ============ -->
+<section class="band-navy" id="enroll">
+  <div class="wrap">
+    <h2>How to enroll</h2>
+    <p>Enrollment is by application — not because we enjoy gatekeeping, but because the Circle only works when everyone in it has real work to bring and the weekly time to bring it. The application takes about ten minutes: it asks about your work, your current AI use, and the problems you'd want to work on. If anything needs clarifying, we'll schedule a brief confirmation call. Once you're accepted and your enrollment is complete, your seat is confirmed, your book ships, and your pre-program diagnostic and welcome materials arrive.</p>
+    <p>We won't manufacture urgency — no countdown timers, no doors slamming at midnight. But three things are simply true: the founding price is genuinely one-time; the seats are genuinely limited to sixteen; and every month of prompting at random is a month of retyped instructions, unverified outputs, and subscriptions that don't earn their keep. <strong>AI access is not AI readiness, and the gap between them doesn't close on its own.</strong> It closes with a method, practiced in good company, on your real work.</p>
+    <p style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.25rem">That's what this room is for. If it sounds like your room, apply.</p>
+    <p><a class="btn js-apply" href="#enroll">Apply for a Founding Seat — Applications Close September 11</a></p>
+    <p style="font-size:.95rem;opacity:.85;margin-top:1rem"><strong>Stop prompting. Start briefing.</strong></p>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <p>Grand Strategy Consulting LLC · Powering Logic with EI &amp; AI · Emotional Maths® · SUMMS™ · SCRIPT™ · Human in the Lead</p>
+    <p><a href="https://stopwastingtimewithai.com">stopwastingtimewithai.com</a> &nbsp;·&nbsp; <a href="https://zenacollins.com">zenacollins.com</a> &nbsp;·&nbsp; <a href="{{PRIVACY_POLICY_URL}}">Privacy Policy</a></p>
+  </div>
+</footer>
+
+<script>
+  /* Wire CTAs from CONFIG. Page remains fully readable with JS disabled;
+     buttons then anchor to #enroll where the process is described. */
+  (function(){
+    var applyUrl = CONFIG.WAITLIST_MODE ? CONFIG.WAITLIST_URL : CONFIG.APPLY_URL;
+    document.querySelectorAll('.js-apply').forEach(function(a){
+      if(CONFIG.WAITLIST_MODE){ a.textContent = 'Join the Waitlist for the Next Cohort'; }
+      if(applyUrl && applyUrl.indexOf('{{') === -1){ a.href = applyUrl; }
+    });
+    document.querySelectorAll('.js-pay').forEach(function(a){
+      if(CONFIG.WAITLIST_MODE){
+        a.textContent = 'Join the Waitlist';
+        if(CONFIG.WAITLIST_URL && CONFIG.WAITLIST_URL.indexOf('{{') === -1){ a.href = CONFIG.WAITLIST_URL; }
+        return;
+      }
+      var url = CONFIG[a.getAttribute('data-link')];
+      if(url && url.indexOf('{{') === -1){ a.href = url; }
+    });
+  })();
+</script>
+</body>
+</html>
