@@ -587,17 +587,24 @@ function showPage(target, scroll){
   document.querySelectorAll('.nav a[data-page]').forEach(a => a.classList.toggle('active', a.getAttribute('data-page') === target && !a.classList.contains('brand')));
   if(scroll !== false) window.scrollTo({top:0, behavior:'auto'});
 }
+function currentPage(){
+  var h = location.hash.slice(1);
+  return (h && document.getElementById(h)) ? h : 'home';
+}
 document.addEventListener('click', function(e){
   const link = e.target.closest('[data-page]');
   if(!link) return;
   e.preventDefault();
-  showPage(link.getAttribute('data-page'), true);
+  const target = link.getAttribute('data-page');
+  if(currentPage() !== target){
+    history.pushState(null, '', target === 'home' ? location.pathname + location.search : '#' + target);
+  }
+  showPage(target, true);
 });
-// deep-link support: index.html#book (e.g. from The SWTWAI Journey nav)
-window.addEventListener('DOMContentLoaded', function(){
-  var h = location.hash.slice(1);
-  if(h && document.getElementById(h)) showPage(h, false);
-});
+// URL routing: every page is shareable as /#book, /#assess, etc.
+window.addEventListener('popstate', function(){ showPage(currentPage(), true); });
+window.addEventListener('hashchange', function(){ showPage(currentPage(), true); });
+window.addEventListener('DOMContentLoaded', function(){ showPage(currentPage(), false); });
 </script>
 </body>
 </html>
