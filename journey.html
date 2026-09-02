@@ -144,8 +144,8 @@ function render(){const q=($("#q").value||"").toLowerCase().trim();
  let list=A.filter(a=>activeSection==="All"||a.category===activeSection);
  if(q)list=list.filter(a=>(a.title+" "+a.excerpt+" "+a.category).toLowerCase().includes(q));
  let html="";
- if(activeSection==="All"&&!q){ORDER.forEach(sec=>{const items=A.filter(a=>a.category===sec);if(!items.length)return;
-  html+=`<div class="secthead"><div class="bar" style="background:${acc(sec)}"></div><div><h2>${sec}</h2><p>${BLURBS[sec]||""}</p><div class="cnt">${items.length} ARTICLES</div></div></div><div class="grid">${items.map(card).join("")}</div>`;});}
+ if(activeSection==="All"&&!q){const items=[...A].sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  html=`<div class="grid">${items.map(card).join("")}</div>`;}
  else{html=list.length?`<div class="grid">${list.map(card).join("")}</div>`:`<div class="empty">No articles match “${q}”.</div>`;}
  $("#content").innerHTML=html;}
 function openArticle(id){const a=A.find(x=>x.id===id);if(!a)return;const c=acc(a.category);
