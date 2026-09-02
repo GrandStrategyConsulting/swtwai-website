@@ -19,7 +19,7 @@ swtwai-website/
 
 ## The website
 
-`index.html` is the entire site — seven pages (Home, The Book, Assess Your EI, Learn, Speaking, For Schools, For Teams) in one self-contained file. Images (author photo, book cover) are embedded, so nothing else is needed to display it. Navigation is client-side; no build step, no dependencies.
+`index.html` contains the main marketing site. `journey.html` contains the article library and its moderated comments interface. Dailey OS runs `server.js` to serve the static files and the comment API; comments are stored in the project's private object storage and remain hidden until approved in `comments-admin.html`.
 
 ### To view it
 Open `index.html` in any browser.

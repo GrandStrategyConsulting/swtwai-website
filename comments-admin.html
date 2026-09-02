@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comment Moderation — SWTWAI</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#16245C;--purple:#8E4DFF;--green:#15803d;--red:#b42318;--pale:#F4F6FA;--line:#dfe4ee;--body:#3A4356}
+    *{box-sizing:border-box}body{margin:0;background:var(--pale);color:var(--navy);font-family:'Poppins',sans-serif}
+    header{background:var(--navy);color:#fff;padding:24px}header div,main{max-width:900px;margin:auto}h1{margin:0;font-size:25px}
+    main{padding:36px 20px}.login,.empty,.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:18px}
+    label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}input{width:100%;padding:12px;border:1.5px solid var(--line);border-radius:8px;font:inherit}
+    button{border:0;border-radius:8px;padding:11px 16px;font:600 13px 'Poppins',sans-serif;cursor:pointer}.primary{background:var(--purple);color:#fff}.approve{background:var(--green);color:#fff}.reject{background:#fff;color:var(--red);border:1px solid #f0b4ae}
+    .toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}.actions{display:flex;gap:9px;margin-top:16px}
+    .meta{font-size:12px;color:#7a869c;margin-bottom:12px}.body{font:17px/1.6 'Source Serif 4',serif;color:var(--body);white-space:pre-wrap}.status{min-height:24px;color:var(--body);font-size:13px}
+    [hidden]{display:none!important}
+  </style>
+</head>
+<body>
+  <header><div><h1>SWTWAI Comment Moderation</h1></div></header>
+  <main>
+    <section class="login" id="login">
+      <label for="token">Moderation access key</label>
+      <input id="token" type="password" autocomplete="current-password">
+      <div class="actions"><button class="primary" id="signIn">Open moderation queue</button></div>
+      <p class="status" id="loginStatus" role="status"></p>
+    </section>
+    <section id="dashboard" hidden>
+      <div class="toolbar"><strong>Comments awaiting approval</strong><button id="refresh">Refresh</button></div>
+      <p class="status" id="queueStatus" role="status"></p>
+      <div id="queue"></div>
+    </section>
+  </main>
+  <script>
+    const API_BASE=location.hostname==='swtwai-website.dailey.cloud'?'':'https://swtwai-website.dailey.cloud';
+    const tokenInput=document.getElementById('token');
+    const login=document.getElementById('login');
+    const dashboard=document.getElementById('dashboard');
+    const queue=document.getElementById('queue');
+    const queueStatus=document.getElementById('queueStatus');
+    let accessKey=sessionStorage.getItem('swtwai-comments-key')||'';
+    tokenInput.value=accessKey;
+
+    async function api(path,options={}){
+      const response=await fetch(API_BASE+path,{...options,headers:{'Content-Type':'application/json','Authorization':'Bearer '+accessKey,...(options.headers||{})}});
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok)throw new Error(data.error||'Request failed.');
+      return data;
+    }
+    function make(tag,className,text){const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el;}
+    function renderComment(comment){
+      const card=make('article','card');
+      card.append(make('div','meta',`${comment.articleTitle||comment.articleId} · ${new Date(comment.createdAt).toLocaleString()}`));
+      card.append(make('strong','',comment.name));
+      card.append(make('div','body',comment.body));
+      const actions=make('div','actions');
+      const approve=make('button','approve','Approve');
+      const reject=make('button','reject','Reject');
+      approve.onclick=()=>moderate(comment,'approve',card);
+      reject.onclick=()=>moderate(comment,'reject',card);
+      actions.append(approve,reject);card.append(actions);return card;
+    }
+    async function loadQueue(){
+      queueStatus.textContent='Loading…';
+      try{
+        const data=await api('/api/admin/comments?status=pending');
+        queue.replaceChildren(...data.comments.map(renderComment));
+        if(!data.comments.length)queue.append(make('div','empty','There are no comments awaiting approval.'));
+        queueStatus.textContent=`${data.comments.length} pending comment${data.comments.length===1?'':'s'}`;
+        login.hidden=true;dashboard.hidden=false;
+      }catch(error){document.getElementById('loginStatus').textContent=error.message;sessionStorage.removeItem('swtwai-comments-key');}
+    }
+    async function moderate(comment,action,card){
+      const url=`/api/admin/comments/${encodeURIComponent(comment.articleId)}/${encodeURIComponent(comment.id)}${action==='approve'?'/approve':''}`;
+      try{await api(url,{method:action==='approve'?'POST':'DELETE'});card.remove();await loadQueue();}catch(error){queueStatus.textContent=error.message;}
+    }
+    document.getElementById('signIn').onclick=()=>{accessKey=tokenInput.value.trim();sessionStorage.setItem('swtwai-comments-key',accessKey);loadQueue();};
+    document.getElementById('refresh').onclick=loadQueue;
+    tokenInput.addEventListener('keydown',event=>{if(event.key==='Enter')document.getElementById('signIn').click();});
+    if(accessKey)loadQueue();
+  </script>
+</body>
+</html>
