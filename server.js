@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const path = require("path");
 const express = require("express");
+const { Pool } = require("pg");
 const {
   DeleteObjectCommand,
   GetObjectCommand,
@@ -46,6 +47,108 @@ const s3 = storageConfigured
 app.set("trust proxy", 1);
 app.disable("x-powered-by");
 app.use(express.json({ limit: "24kb" }));
+
+// ---------------------------------------------------------------------------
+// Enquiries: store first, notify second.
+//
+// These forms used to POST straight to formsubmit.co, a third party outside this
+// account. Nothing was retained: if the email bounced, was filtered, or was
+// deleted, the enquiry was gone, and speaking enquiries carry budget information
+// we should not be handing to a service we do not control.
+//
+// The database write is the system of record. Email is only a notification, so a
+// mail failure must never cost Zena the lead.
+// ---------------------------------------------------------------------------
+let pool;
+function db() {
+  if (!process.env.DATABASE_URL) return null;
+  if (!pool) pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 3 });
+  return pool;
+}
+
+async function saveEnquiry(form, fields, req) {
+  const p = db();
+  if (!p) {
+    console.warn("[enquiry] no DATABASE_URL, submission NOT persisted");
+    return null;
+  }
+  const { rows } = await p.query(
+    `INSERT INTO enquiries
+       (form, name, email, organization, event_detail, audience, format_budget,
+        message, payload, user_agent, remote_ip)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING id`,
+    [
+      form,
+      fields.Name || fields.name || null,
+      fields.email || null,
+      fields.Organization || null,
+      fields["Event name and date"] || null,
+      fields["Audience size and profile"] || null,
+      fields["Format and budget range"] || null,
+      fields.Message || null,
+      JSON.stringify(fields || {}),
+      (req.get("user-agent") || "").slice(0, 512) || null,
+      (req.headers["x-forwarded-for"] || req.ip || "").split(",")[0].trim() || null,
+    ],
+  );
+  return rows[0].id;
+}
+
+async function notifyEnquiry(form, fields, id) {
+  const base = process.env.DAILEY_EMAIL_API_URL;
+  const key = process.env.DAILEY_EMAIL_API_KEY;
+  const to = process.env.ENQUIRY_NOTIFY_TO || "hello@grandstrategy.llc";
+  if (!base || !key) {
+    // Dailey Email not enabled yet. The enquiry is already saved, so this is a
+    // missing notification, not a lost lead.
+    console.warn("[enquiry] Dailey Email not configured; stored only (id=" + id + ")");
+    return false;
+  }
+  const lines = Object.entries(fields)
+    .filter(([k]) => !k.startsWith("_"))
+    .map(([k, v]) => k + ": " + v)
+    .join("\n");
+  const res = await fetch(base.replace(/\/$/, "") + "/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: "Bearer " + key },
+    body: JSON.stringify({
+      to,
+      subject: form === "speaking" ? "New speaking enquiry — SWTWAI website" : "SWTWAI newsletter signup",
+      text: lines + "\n\nStored as enquiry #" + id + ".",
+    }),
+  });
+  if (!res.ok) throw new Error("email gateway " + res.status);
+  return true;
+}
+
+app.post("/api/enquiry", async (req, res) => {
+  const fields = req.body || {};
+  // Honeypot: bots fill hidden fields, humans never see them.
+  if (fields._honey) return res.json({ ok: true });
+
+  const form = fields._form === "speaking" ? "speaking" : "newsletter";
+  if (!fields.email) return res.status(400).json({ ok: false, error: "Email is required." });
+
+  let id;
+  try {
+    id = await saveEnquiry(form, fields, req);
+  } catch (err) {
+    // Storing is the whole point, so a failure here is a real failure and the
+    // visitor must be told rather than shown a false success.
+    console.error("[enquiry] save failed:", err.message);
+    return res.status(500).json({ ok: false, error: "Could not save your enquiry. Please email hello@grandstrategy.llc." });
+  }
+
+  try {
+    const sent = await notifyEnquiry(form, fields, id);
+    if (sent && id) await db().query("UPDATE enquiries SET emailed = true WHERE id = $1", [id]);
+  } catch (err) {
+    console.error("[enquiry] notify failed (lead is saved, id=" + id + "):", err.message);
+  }
+
+  res.json({ ok: true, id });
+});
+
 
 app.use((req, res, next) => {
   const origin = req.get("origin");

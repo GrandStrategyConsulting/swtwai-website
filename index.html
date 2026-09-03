@@ -225,7 +225,7 @@ footer .strap{font-family:'Poppins',sans-serif;font-size:.66rem;letter-spacing:.
   <div class="wrap"><div class="capture">
     <h2>Think better before you prompt again.</h2>
     <p>One practical Emotional Maths® exercise in your inbox each week. No hype, no tool-of-the-week churn.</p>
-    <form action="https://formsubmit.co/hello@grandstrategy.llc" method="POST">
+    <form class="js-enquiry" data-form="newsletter" action="/api/enquiry" method="POST">
       <input type="hidden" name="_subject" value="SWTWAI newsletter signup">
       <input type="hidden" name="_template" value="table">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -345,7 +345,7 @@ footer .strap{font-family:'Poppins',sans-serif;font-size:.66rem;letter-spacing:.
   <section class="block"><div class="wrap" style="max-width:640px">
     <div class="eyebrow">Booking Enquiry</div>
     <h2>Tell us about your event</h2>
-    <form class="enquiry" action="https://formsubmit.co/hello@grandstrategy.llc" method="POST" style="display:grid;gap:14px;margin-top:1.4rem">
+    <form class="enquiry js-enquiry" data-form="speaking" action="/api/enquiry" method="POST" style="display:grid;gap:14px;margin-top:1.4rem">
       <input type="hidden" name="_subject" value="New speaking enquiry — SWTWAI website">
       <input type="hidden" name="_template" value="table">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -604,6 +604,36 @@ document.addEventListener('click', function(e){
 window.addEventListener('popstate', function(){ showPage(currentPage(), true); });
 window.addEventListener('hashchange', function(){ showPage(currentPage(), true); });
 window.addEventListener('DOMContentLoaded', function(){ showPage(currentPage(), false); });
+</script>
+<script>
+// Submit enquiry forms to our own endpoint so the lead is stored before any
+// email is attempted. On failure we say so rather than pretending it worked.
+document.querySelectorAll("form.js-enquiry").forEach(function (form) {
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var btn = form.querySelector("button[type=submit]");
+    var original = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Sending..."; }
+    var data = Object.fromEntries(new FormData(form).entries());
+    data._form = form.dataset.form;
+    try {
+      var res = await fetch(form.action, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      var out = await res.json();
+      if (!res.ok || !out.ok) throw new Error(out.error || "Something went wrong.");
+      form.innerHTML = '<p role="status" style="margin:0">Thank you. We have your details and Zena will be in touch.</p>';
+    } catch (err) {
+      if (btn) { btn.disabled = false; btn.textContent = original; }
+      var msg = form.querySelector(".enquiry-error") || Object.assign(document.createElement("p"), { className: "enquiry-error" });
+      msg.style.color = "#b3261e";
+      msg.textContent = err.message + " You can also email hello@grandstrategy.llc.";
+      form.appendChild(msg);
+    }
+  });
+});
 </script>
 </body>
 </html>
