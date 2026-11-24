@@ -225,7 +225,7 @@ footer .strap{font-family:'Poppins',sans-serif;font-size:.66rem;letter-spacing:.
   <div class="wrap"><div class="capture">
     <h2>Think better before you prompt again.</h2>
     <p>One practical Emotional Maths® exercise in your inbox each week. No hype, no tool-of-the-week churn.</p>
-    <form class="js-enquiry" data-form="newsletter" action="/api/enquiry" method="POST">
+    <form class="js-enquiry" data-form="newsletter" action="https://swtwai-website.dailey.cloud/api/enquiry" method="POST">
       <input type="hidden" name="_subject" value="SWTWAI newsletter signup">
       <input type="hidden" name="_template" value="table">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -345,7 +345,7 @@ footer .strap{font-family:'Poppins',sans-serif;font-size:.66rem;letter-spacing:.
   <section class="block"><div class="wrap" style="max-width:640px">
     <div class="eyebrow">Booking Enquiry</div>
     <h2>Tell us about your event</h2>
-    <form class="enquiry js-enquiry" data-form="speaking" action="/api/enquiry" method="POST" style="display:grid;gap:14px;margin-top:1.4rem">
+    <form class="enquiry js-enquiry" data-form="speaking" action="https://swtwai-website.dailey.cloud/api/enquiry" method="POST" style="display:grid;gap:14px;margin-top:1.4rem">
       <input type="hidden" name="_subject" value="New speaking enquiry — SWTWAI website">
       <input type="hidden" name="_template" value="table">
       <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
@@ -549,11 +549,11 @@ document.addEventListener('DOMContentLoaded',function(){
     <div class="eyebrow">What This Site Collects</div>
     <h2>Only what you choose to send us</h2>
     <p>This website sets no cookies, runs no advertising trackers, and uses no analytics that profile you. If you simply read and leave, we learn nothing about you personally.</p>
-    <p style="margin-top:.8rem">If you submit the speaking enquiry form or join the email list, the details you type — your name, organization, email address, and message — are delivered to us by a form-relay service (FormSubmit) and arrive in our inbox at hello@grandstrategy.llc. Like most websites, our hosting provider (GitHub Pages) and font provider (Google Fonts) may record standard technical logs such as IP addresses when the page loads; we never see or use those logs.</p>
+    <p style="margin-top:.8rem">If you submit the speaking enquiry form or join the email list, the details you type — such as your name, organization, email address, and message — are saved in our Dailey OS-hosted database. Dailey Email also sends us a notification at hello@grandstrategy.llc so we can act on your request. Like most websites, our hosting providers (GitHub Pages and Dailey OS) and font provider (Google Fonts) may record standard technical logs such as IP addresses; we do not use those logs to profile you.</p>
 
     <div class="eyebrow" style="margin-top:2.2rem">What We Do With It</div>
-    <h2>We reply. That's it.</h2>
-    <p>What you send us is used to respond to you and, if we work together, to serve you well. We do not sell, rent, or trade your information. We do not add you to a mailing list you didn't ask to join. If you ask us to delete what we hold about you, we will, and we'll confirm when it's done — email hello@grandstrategy.llc any time to ask what we have, correct it, or remove it.</p>
+    <h2>We use it for the request you made.</h2>
+    <p>If you join the email list, we use your email address to send the weekly practice you requested. If you submit a speaking enquiry, we use those details to respond and, if we work together, to serve you well. We do not sell, rent, or trade your information, or add you to a mailing list you didn't ask to join. If you ask us to delete what we hold about you, we will, and we'll confirm when it's done — email hello@grandstrategy.llc any time to ask what we have, correct it, or remove it.</p>
 
     <div class="eyebrow" style="margin-top:2.2rem">Assessment Confidentiality</div>
     <h2>Your MSCEIT®2 results are yours</h2>
@@ -622,12 +622,18 @@ document.querySelectorAll("form.js-enquiry").forEach(function (form) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      var out = await res.json();
+      var contentType = res.headers.get("content-type") || "";
+      var out = contentType.includes("application/json") ? await res.json() : null;
+      if (!out) throw new Error("The form service is temporarily unavailable.");
       if (!res.ok || !out.ok) throw new Error(out.error || "Something went wrong.");
-      form.innerHTML = '<p role="status" style="margin:0">Thank you. We have your details and Zena will be in touch.</p>';
+      var success = form.dataset.form === "newsletter"
+        ? "Thank you. You're on the list."
+        : "Thank you. We have your details and Zena will be in touch.";
+      form.innerHTML = '<p role="status" style="margin:0">' + success + '</p>';
     } catch (err) {
       if (btn) { btn.disabled = false; btn.textContent = original; }
       var msg = form.querySelector(".enquiry-error") || Object.assign(document.createElement("p"), { className: "enquiry-error" });
+      msg.setAttribute("role", "alert");
       msg.style.color = "#b3261e";
       msg.textContent = err.message + " You can also email hello@grandstrategy.llc.";
       form.appendChild(msg);

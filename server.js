@@ -48,6 +48,21 @@ app.set("trust proxy", 1);
 app.disable("x-powered-by");
 app.use(express.json({ limit: "24kb" }));
 
+// The public site is currently served by GitHub Pages while its form API runs
+// on Dailey OS. Apply CORS before every API route so those responses are
+// readable by the browser on both the apex and www domains.
+app.use((req, res, next) => {
+  const origin = req.get("origin");
+  if (origin && allowedOrigins.has(origin)) {
+    res.set("Access-Control-Allow-Origin", origin);
+    res.set("Vary", "Origin");
+    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    res.set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+  }
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
+
 // ---------------------------------------------------------------------------
 // Enquiries: store first, notify second.
 //
@@ -149,18 +164,6 @@ app.post("/api/enquiry", async (req, res) => {
   res.json({ ok: true, id });
 });
 
-
-app.use((req, res, next) => {
-  const origin = req.get("origin");
-  if (origin && allowedOrigins.has(origin)) {
-    res.set("Access-Control-Allow-Origin", origin);
-    res.set("Vary", "Origin");
-    res.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.set("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
-  }
-  if (req.method === "OPTIONS") return res.sendStatus(204);
-  next();
-});
 
 const rateLimits = new Map();
 function rateLimited(ip) {
